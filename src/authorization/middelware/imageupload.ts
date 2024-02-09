@@ -20,9 +20,10 @@ export default class uploadImageController {
 
   uploadimage = this.uploadSingleImage('image');
 
-  // ___________________________________(0-0)______________________________________
+  // ___________________________________        (0-0)           ______________________________________
 
   uploadMultiImage() {
+
     const multerStorage = memoryStorage();
 
     const multerFilter = (_req: any, file: any, cb: any) => {
@@ -34,7 +35,7 @@ export default class uploadImageController {
     };
     const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
     return upload.fields([
-      { name: 'images', maxCount: 5 },
+      { name: 'images', maxCount: 3 },
       { name: 'imageCover', maxCount: 1 }
     ]);
   }
@@ -43,28 +44,19 @@ export default class uploadImageController {
 
   resizeimage = async (req: Request, res: Response, next: any) => {
     try {
+
       if (!req.files && !req.file) {
         res.json({ status: 'unallowed' });
         return;
       }
-
-      if (!req.body.type) {
-        res.json({ status: 'No type' });
-        return;
-      }
-
-      const allowedMImageTypes = ['categories', 'brands', 'products'];
-      if (!allowedMImageTypes.includes(req.body.type)) {
-        res.json({ status: 'unallowed type' });
-        return;
-      }
+      
       const pathimg = path.resolve(__dirname, `../../uploads/${req.body.type}`);
       if (req.file) {
-        const ext = req.file.mimetype.split('/')[1];
+        const ext      = req.file.mimetype.split('/')[1];
         const filename = `${req.body.type}-${uuidv4()}-${Date.now()}.${ext}`;
 
         await sharp(req.file.buffer).toFile(
-          path.resolve(pathimg, `${filename}`)
+          path.resolve(pathimg,`${filename}`)
         );
 
         req.body.filename = filename;
@@ -76,7 +68,7 @@ export default class uploadImageController {
       if (req.files.imageCover) {
         // @ts-ignore
         const ext = req.files.imageCover[0].mimetype.split('/')[1];
-        const imageCoverFilename = `products-${uuidv4()}-${Date.now()}-cover.${ext}`;
+        const imageCoverFilename = `halls-${uuidv4()}-${Date.now()}-cover.${ext}`;
         // @ts-ignore
         await sharp(req.files.imageCover[0].buffer).toFile(
           path.resolve(pathimg, `${imageCoverFilename}`)
@@ -93,7 +85,7 @@ export default class uploadImageController {
           // @ts-ignore
           req.files.images.map(async (img, index) => {
             const ext = img.mimetype.split('/')[1];
-            const filename = `products-${uuidv4()}-${Date.now()}-${
+            const filename = `halls-${uuidv4()}-${Date.now()}-${
               index + 1
             }.${ext}`;
 
@@ -107,7 +99,6 @@ export default class uploadImageController {
       }
       next();
     } catch (err) {
-      console.error(err);
       res.status(400);
       res.json({ status: 'fail' });
       return;

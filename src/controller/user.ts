@@ -10,6 +10,7 @@ const userobject = new User();
 const cipher = new Cipher();
 
 export default class UserController {
+
   index = async (_req: Request, res: Response) => {
     try {
       const allusers = await userobject.index();
@@ -267,7 +268,7 @@ export default class UserController {
         res.json({ status: 'fail' });
         return;
       }
-      const hash = await cipher.encrypt(req.body.newpassword);
+      const hash    = await cipher.encrypt(req.body.newpassword);
       const updated = await userobject.updateUserFields({
         email: req.body.email,
         password: hash,

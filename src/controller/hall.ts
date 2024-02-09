@@ -31,7 +31,7 @@ export default class HallController {
       }
 
     } catch (err) {
-        console.log(err)
+
       res.status(400);
       res.json({ status: 'fail' });
       return;
@@ -62,7 +62,6 @@ export default class HallController {
       return;
     } catch (err) {
       res.status(400);
-      console.log(err)
       res.json({ status: 'fail' });
       return;
     }

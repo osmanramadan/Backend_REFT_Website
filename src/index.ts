@@ -4,7 +4,7 @@ import cors from 'cors';
 import routes from './routes';
 
 const app: express.Application = express();
-const port = 3001;
+const port = 3003;
 
 const corsoptions = {
   origin: 'http://localhost:3000',

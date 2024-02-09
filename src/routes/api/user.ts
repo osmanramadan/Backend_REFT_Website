@@ -13,9 +13,9 @@ import {
 const usercontroller = new Usercontroller();
 const users: express.Router = express.Router();
 
-users.get('/', verify, usercontroller.index);
-users.post('/signup', signupValidator, usercontroller.create);
-users.post('/login', loginValidator, usercontroller.getuserbycredentials);
+users.get('/'       , verify          , usercontroller.index);
+users.post('/signup', signupValidator , usercontroller.create);
+users.post('/login' , loginValidator  , usercontroller.getuserbycredentials);
 users.post(
   '/forgotPassword',
   forgetPasswordValidator,
@@ -31,8 +31,8 @@ users.post(
   resetPasswordValidator,
   usercontroller.resetpassword
 );
-users.put('/updateuserprofile', usercontroller.updateuserprofile);
-users.put('/updateuserpassword', usercontroller.updateuserpassword);
+users.put('/updateuserprofile'  , usercontroller.updateuserprofile);
+users.put('/updateuserpassword' , usercontroller.updateuserpassword);
 
 // users.get('/:id', verify, usercontroller.show);
 // users.delete('/delete/:id', verify, usercontroller.delete);

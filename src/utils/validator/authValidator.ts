@@ -6,6 +6,7 @@ import { User } from '../../model/user';
 const userobject = new User();
 
 export const signupValidator = [
+
   check('username')
     .notEmpty()
     .withMessage('username required field')
@@ -16,18 +17,18 @@ export const signupValidator = [
       return true;
     }),
 
-  // check('email')
-  // .notEmpty()
-  // .withMessage('Email required field')
-  // .isEmail()
-  // .withMessage('من فضلك ادخل ايميل صحيح')
-  // .custom(async (_val, { req })=>{
-  //     const existemail = await userobject.emailExists(req.body.email);
-  //     if (existemail) {
-  //         throw  new Error(`الايميل موجود بالفعل`);
-  //     }
-  //     return true;
-  // }),
+  check('email')
+  .notEmpty()
+  .withMessage('Email required field')
+  .isEmail()
+  .withMessage('من فضلك ادخل ايميل صحيح')
+  .custom(async (_val, { req })=>{
+      const existemail = await userobject.emailExists(req.body.email);
+      if (existemail) {
+          throw  new Error(`الايميل موجود بالفعل`);
+      }
+      return true;
+  }),
 
   check('password')
     .notEmpty()
@@ -52,10 +53,25 @@ export const signupValidator = [
   .custom(async (_val, { req }) => {
       const existphone = await userobject.phoneExists(req.body.phone);
       if (existphone) {
-      throw new Error("الرقم موجود بالفعل");
+        throw new Error("الرقم موجود بالفعل");
       }
       return true;
   }),
+
+  check('city')
+  .notEmpty()
+  .withMessage('city required')
+  .custom(async (_val, { req }) => {
+      return true;
+  }),
+
+  check('role')
+  .notEmpty()
+  .withMessage('role required')
+  .custom(async (_val, { req }) => {
+      return true;
+  }),
+
 
   validatorMiddleware
 ];
@@ -74,6 +90,8 @@ export const loginValidator = [
     .withMessage('password must be at least 8 chars'),
   validatorMiddleware
 ];
+
+
 export const forgetPasswordValidator = [
   check('email')
     .notEmpty()
