@@ -97,17 +97,18 @@ export const forgetPasswordValidator = [
     .notEmpty()
     .withMessage('Email required field')
     .isEmail()
-    .withMessage('من فضلك ادخل ايميل صحيح')
+    .withMessage('Invalid email')
     .custom(async (_val, { req }) => {
       const existemail = await userobject.emailExists(req.body.email);
       if (!existemail) {
-        throw new Error(`الايميل غير موجود لدينا`);
+        throw new Error('Email doesnt exist');
       }
       return true;
     }),
 
   validatorMiddleware
 ];
+
 export const verifyPasswordValidator = [
   check('email')
     .notEmpty()

@@ -11,7 +11,7 @@ const UploadImageController = new uploadImageController();
 const hall: express.Router = express.Router();
 
 hall.get('/'           ,  hallcontroller.index);
-hall.post('/add'       ,UploadImageController.resizeimage , addhallValidator ,  hallcontroller.create);
+hall.post('/add'       ,  UploadImageController.uploadSingleImage, UploadImageController.resizeimage , addhallValidator ,  hallcontroller.create);
 hall.post('/delete/:id',  hallcontroller.delete);
 hall.put('/update'     ,  hallcontroller.update);
 

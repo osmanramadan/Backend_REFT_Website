@@ -111,6 +111,8 @@ export default class UserController {
         role: req.body.role
       };
 
+      
+
       const existemail = await userobject.emailExists(req.body.email);
       if (existemail) {
         res.json({ error: 'Email already exist' });
