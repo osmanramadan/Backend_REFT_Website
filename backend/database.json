@@ -1,3 +1,4 @@
+
 {
   "dev": {
     "driver": "pg",
@@ -8,15 +9,14 @@
       "password": "reftreft"
     }
   },
-  
+
   "test": {
     "driver": "pg",
     "connection": {
-      "host": "localhost",
+      "host":"localhost",
       "database": "test_reft",
       "user": "reftreft",
       "password": "reftreft"
     }
   }
-
 }

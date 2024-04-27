@@ -10,6 +10,7 @@ const userobject = new User();
 const cipher = new Cipher();
 
 export default class UserController {
+
   index = async (_req: Request, res: Response) => {
     try {
       const allusers = await userobject.index();
@@ -50,6 +51,7 @@ export default class UserController {
           req.body.email,
           req.body.password
         );
+       
         if (userbyemail) {
           
           const token = await generatetoken(userbyemail);
@@ -101,18 +103,22 @@ export default class UserController {
 
   create = async (req: Request, res: Response) => {
     try {
+
       const userquery: user = {
+
         email: req.body.email,
-        username: req.body.slug,
+        username: req.body.username,
         password: req.body.password,
         phone: req.body.phone,
         city: req.body.city,
         role: req.body.role
+
       };
-      console.log(userquery,'-----------------------------------------')
-      
+
+      console.log(userquery,'>>>*********************************************************************<<<<----')
 
       const existemail = await userobject.emailExists(req.body.email);
+    
       if (existemail) {
         res.json({ error: 'Email already exist' });
         return;
@@ -123,9 +129,10 @@ export default class UserController {
         res.json({ error: 'Phone already exist' });
         return;
       }
-      console.log("---------++++ass++++++++")
+      console.log(existphone)
+    
       const newuser = await userobject.create(userquery);
-      console.log("!!!!!!!!!!!!!!!!!")
+
       const token = await generatetoken(newuser);
       res.json({ token: token });
       return;

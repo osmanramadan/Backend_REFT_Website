@@ -14,6 +14,7 @@ export default class MessageController {
       }
       res.json({ status: 'fail' });
       return;
+      
     } catch (err) {
       res.status(400);
       res.json({ status: 'fail' });
@@ -50,6 +51,7 @@ export default class MessageController {
       };
 
       const newmessage = await messageobject.create(message);
+
       if (newmessage) {
         res.json({ status: 'success', data: newmessage });
         return;

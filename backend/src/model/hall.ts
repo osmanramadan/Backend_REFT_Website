@@ -6,8 +6,10 @@ import { hall } from '../types/hall';
 dotenv.config();
 
 export class Hall {
+
   async index(): Promise<hall[]> {
     try {
+
       // @ts-ignore
       const conn = await pool.connect();
       const sql = "SELECT * FROM hall where checked='true'";
@@ -23,8 +25,10 @@ export class Hall {
 
   async adminindex(): Promise<hall[]> {
     try {
+
       // @ts-ignore
       const conn = await pool.connect();
+   
       const sql = "SELECT * FROM hall where checked='false'";
 
       const result = await conn.query(sql);

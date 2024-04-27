@@ -33,4 +33,3 @@ CREATE TABLE IF NOT EXISTS hall_book (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
-
