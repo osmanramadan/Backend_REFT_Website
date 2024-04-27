@@ -22,15 +22,10 @@ export default class UserController {
     }
   };
 
-  show = async (req: Request, res: Response) => {
-    try {
-      const userbyid = await userobject.show(req.params.id);
-      res.json(userbyid);
-      return;
-    } catch (err) {
-      res.status(400);
-      res.json({ status: 'fail' });
-      return;
+  show = async (id: number) => {
+    const userbyid = await userobject.show(id);
+    if (userbyid) {
+      return userbyid;
     }
   };
 
@@ -48,6 +43,7 @@ export default class UserController {
 
   getuserbycredentials = async (req: Request, res: Response) => {
     try {
+      
       const existemail = await userobject.emailExists(req.body.email);
       if (existemail) {
         const userbyemail = await userobject.getuserbycredentials(
@@ -55,8 +51,10 @@ export default class UserController {
           req.body.password
         );
         if (userbyemail) {
+          
           const token = await generatetoken(userbyemail);
           delete userbyemail.password;
+          
           res.json({ data: userbyemail, token: token });
           return;
         } else {
@@ -77,7 +75,9 @@ export default class UserController {
 
   getuserbyemail = async (req: Request, res: Response) => {
     try {
+    
       const existemail = await userobject.emailExists(req.body.email);
+    
       if (existemail) {
         const userbyemail = await userobject.getuserbyemail(req.body.email);
         if (userbyemail) {
@@ -109,6 +109,8 @@ export default class UserController {
         city: req.body.city,
         role: req.body.role
       };
+      console.log(userquery,'-----------------------------------------')
+      
 
       const existemail = await userobject.emailExists(req.body.email);
       if (existemail) {
@@ -121,11 +123,13 @@ export default class UserController {
         res.json({ error: 'Phone already exist' });
         return;
       }
-
+      console.log("---------++++ass++++++++")
       const newuser = await userobject.create(userquery);
+      console.log("!!!!!!!!!!!!!!!!!")
       const token = await generatetoken(newuser);
       res.json({ token: token });
       return;
+
     } catch (err) {
       res.status(400);
       res.json({ status: 'fail' });
