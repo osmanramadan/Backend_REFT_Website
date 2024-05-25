@@ -61,8 +61,8 @@ export default class HallController {
             return;
           }
         }
-
-        res.json({ status: 'success', data: data });
+        // res.redirect('/success')
+        res.json({ status: 'success', data:data});
         return;
       }
     } catch (err) {
@@ -330,6 +330,25 @@ export default class HallController {
       if (updated) {
         
         res.json({ status: 'success' });
+        return;
+      }
+      res.json({ status: 'fail' });
+      return;
+    } catch (err) {
+      res.status(400);
+      res.json({ status: 'fail' });
+      return;
+    }
+  };
+
+  hallcities = async (req: Request, res: Response) => {
+    try {
+
+
+      const cities = await hallobject.hallcities();
+      if (cities) {
+        
+        res.json({ status: 'success',cities:cities });
         return;
       }
       res.json({ status: 'fail' });
